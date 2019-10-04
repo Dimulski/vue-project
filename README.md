@@ -1,4 +1,5 @@
 # vue-project
+<<<<<<< HEAD
 
 ## Project setup
 ```
