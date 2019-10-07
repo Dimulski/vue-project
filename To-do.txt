@@ -1,0 +1,3 @@
+v-show for changing often
+v-if for changing rarely
+

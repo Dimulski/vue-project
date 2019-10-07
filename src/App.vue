@@ -41,4 +41,19 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.main-content {
+  margin: auto;
+  margin-bottom: 80px;
+  padding: 35px;
+  -webkit-border-radius: 2px 6px 6px;
+  border-radius: 2px 6px 6px;
+  background: #fff;
+  -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.25);
+  box-shadow: 0 3px 20px rgba(0,0,0,.25);
+}
+
+.header {
+  margin-bottom: 45px;
+}
 </style>

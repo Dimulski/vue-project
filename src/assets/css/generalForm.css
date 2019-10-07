@@ -1,0 +1,17 @@
+.main-content {
+  padding-left: 45px !important;
+  padding-right: 45px !important;
+}
+
+.general-error {
+  font-size: 19px;
+  padding-bottom: 15px;
+}
+
+.form-group:not(#checkbox) {
+  text-align: left;
+}
+
+.message {
+  padding-top: 7px;
+}
