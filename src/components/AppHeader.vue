@@ -9,7 +9,7 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
             <b-nav-item  class="nav-link" to="/blog" active-class="active">Blog</b-nav-item>
-            <b-nav-item  class="nav-link" to="/contacts" active-class="active">Contacts</b-nav-item>
+            <b-nav-item  class="nav-link" to="/contact" active-class="active">Contact</b-nav-item>
             <b-nav-item  class="nav-link" to="/tasks" active-class="active">Tasks</b-nav-item>
             <b-nav-item  class="nav-link" to="/photos" active-class="active">Photos</b-nav-item>
             <b-nav-item  class="nav-link" to="/todos" active-class="active"><nobr>To-Do's</nobr></b-nav-item>
