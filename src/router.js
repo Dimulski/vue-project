@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Register from './views/Register.vue'
 import Contact from './views/Contact.vue'
+import Blog from './views/Blog.vue'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
       path: '/contact',
       name: 'contact',
       component: Contact
+    },
+    {
+      path: '/blog',
+      name: 'blog',
+      component: Blog
     }
   ]
 })

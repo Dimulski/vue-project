@@ -2,3 +2,5 @@ v-show for changing often
 v-if for changing rarely
 
 ------------------------------------------
+
+Find a use for Slots and Mixins

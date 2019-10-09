@@ -15,3 +15,12 @@
 .message {
   padding-top: 7px;
 }
+
+.form-group {
+  margin-bottom: 1.7rem !important;
+}
+
+.vti__dropdown {
+  padding-left: 0px !important;
+  margin-left: -5px;
+}

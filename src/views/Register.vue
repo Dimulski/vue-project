@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-col class="main-content" xl="5" lg="6" md="8" sm="10">
+    <b-col class="main-content" v-show="formUnsubmitted" xl="5" lg="6" md="8" sm="10">
       <h1 class="header">Register</h1>
       <div class="text-danger general-error" v-if="shouldShowGeneralError">Incorrect register information.</div>
       <b-form>
@@ -73,6 +73,13 @@
         class="btn-lg" variant="primary" :disabled="!formState">Register</b-button>
       </b-form>
     </b-col>
+    
+    <transition name="fadeUp"
+      :duration="{ enter: 1800, leave: 800 }"
+      v-on:after-enter="showMessage = !showmessage" 
+      v-on:after-leave="redirectToHome">
+      <p id="message-sent" v-if="showMessage">Message sent!</p>
+    </transition>
   </b-container>
 </template>
 
@@ -84,7 +91,9 @@ export default {
       email: null,
       password: null,
       confirmPassword: null,
-      terms: null
+      terms: null,
+      formUnsubmitted: true,
+      showMessage: false
     }
   },
   computed: {
@@ -191,12 +200,16 @@ export default {
     }
   },
   methods: {
+    startLeaving() {
+      this.showMessage = false;
+    },
+    redirectToHome() {
+      this.$router.push({name: 'home'});
+    },
     submitForm(event) {
       event.preventDefault();
-
-      if (this.formState) {
-        this.$router.push({name: 'home'});
-      }
+      this.formUnsubmitted = false;
+      this.showMessage = true;
     }
   }
 }
@@ -204,4 +217,11 @@ export default {
 
 <style scoped>
 @import "../assets/css/generalForm.css";
+
+#message-sent {
+  color: mediumseagreen;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-top: 18rem;
+}
 </style>
