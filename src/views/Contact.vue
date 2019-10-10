@@ -20,7 +20,7 @@
           label="Email address:"
           :invalid-feedback="invalidEmail"
           :state="emailState">
-          <b-form-input 
+          <b-form-input
             type="email" 
             id="email"
             v-model="email"
@@ -61,12 +61,12 @@
 </template>
 
 <script>
-import { log } from 'util';
+import emailField from '../mixins/emailField.js'
+
 export default {
   data() {
     return {
       name: null,
-      email: null,
       phone: {
         number: null,
         fullNumber: null,
@@ -75,6 +75,7 @@ export default {
       message: null
     }
   },
+  mixins:[emailField],
   computed: {
     nameState() {
       if (this.name == null) {
@@ -93,25 +94,6 @@ export default {
         return 'Please enter your name.'
       }
     },
-
-    emailState() {
-      if (this.email == null) {
-        return null
-      }
-      const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-      return emailRegex.test(this.email)
-    },
-    invalidEmail() {
-      if (this.email == null) {
-        return ''
-      }
-      if (this.email.length > 0 && this.email.length < 40) {
-        return 'Invalid email.'
-      } else {
-        return 'Please enter your email address.'
-      }
-    },
-
     phoneState() {
       if (this.phone.valid == null) {
         return null
@@ -141,7 +123,6 @@ export default {
         return 'The message must be between 4 and 500 characters.'
       }
     },
-
     formState() {
       return ((this.nameState && this.emailState && this.phoneState && this.messageState) == true)
     },
@@ -160,8 +141,6 @@ export default {
   methods: {
     submitForm(event) {
       event.preventDefault();
-
-
 
       if (this.formState) {
         this.$router.push({name: 'home'});
@@ -200,5 +179,4 @@ export default {
 textarea {
   height: 150px !important;
 }
-
 </style>

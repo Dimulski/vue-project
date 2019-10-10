@@ -1,12 +1,14 @@
 <template>
-  <b-container>
-    <b-col class="main-content" xl="12">
+  <b-container class="main-content" xl="12">
+    <b-row>
       <h1 class="header">Blog Posts</h1>
-        <b-card v-for="post in posts" :key="post.id" :title='post.title | capitalize'>
-          <b-card-text>{{ post.body | capitalize | limit50}}...</b-card-text>
-          <b-button :to="`post?id=${post.id}`" variant="primary">Go somewhere</b-button>
+      <b-col cols="12" sm="6" lg="4" xl="3" v-for="post in posts" :key="post.id" >
+        <b-card :title='post.title | capitalize' align="left">
+          <b-card-text>{{ post.body | capitalize | limit50Characters }}...</b-card-text>
+          <b-button class="btn-sm" :to="`posts/${post.id}`" variant="primary">Read More</b-button>
         </b-card>
-    </b-col>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -14,18 +16,6 @@
 import axios from 'axios'
 
 export default {
-  filters: {
-    capitalize(value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
-    },
-    limit50(value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.substring(1, 59)
-    }
-  },
   data() {
     return {
       posts: []
@@ -34,27 +24,31 @@ export default {
   mounted() {
     axios
       .get('https://jsonplaceholder.typicode.com/posts')
-      .then(response => (this.posts = response.data))
+      .then(response => {
+        this.posts = response.data.filter(task => task.id > 10 && task.id < 23)
+      })
   }
 }
 </script>
 
 <style scoped>
-.main-content {
-  display: flex;
-  flex-wrap: wrap;
+.card {
+  height: 110% !important;
 }
 
-.card {
-  list-style: none;
-  flex: 0 0 30%;
-  margin: auto;
-  margin-top: 15px;
-  margin-bottom: 15px;
+div [class*='col-'] {
+  padding-bottom: 40px !important;
+}
+
+.btn {
+  margin-top: 10px !important;
+  position: absolute !important;
+  bottom: 15px !important;
+  right: 15px !important;
 }
 
 h1 {
-  width: 100%;
+  width: 110% !important;
   text-align: center;
   margin-bottom: 25px;
 }

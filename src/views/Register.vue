@@ -76,7 +76,7 @@
     
     <transition name="fadeUp"
       :duration="{ enter: 1800, leave: 800 }"
-      v-on:after-enter="showMessage = !showmessage" 
+      v-on:after-enter="showMessage = false" 
       v-on:after-leave="redirectToHome">
       <p id="message-sent" v-if="showMessage">Message sent!</p>
     </transition>
@@ -84,11 +84,12 @@
 </template>
 
 <script>
+import emailField from '../mixins/emailField'
+
 export default {
   data() {
     return {
       username: null,
-      email: null,
       password: null,
       confirmPassword: null,
       terms: null,
@@ -96,6 +97,7 @@ export default {
       showMessage: false
     }
   },
+  mixins: [emailField],
   computed: {
     usernameState() {
       if (this.username == null) {
@@ -115,24 +117,6 @@ export default {
         return 'Please enter your desired username.'
       }
     },
-
-    emailState() {
-      if (this.email == null) {
-        return null;
-      }
-      const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-      return emailRegex.test(this.email)
-    },
-    invalidEmail() {
-      if (this.email == null) {
-        return ''
-      } else if (this.email.length > 0 && this.email.length < 40) {
-        return 'Invalid email.'
-      } else {
-        return 'Please enter your email address.'
-      }
-    },
-
     passwordState() {
       if (this.password == null) {
         return null;
@@ -151,7 +135,6 @@ export default {
         return 'Please enter your desired password.'
       }
     },
-
     confirmPasswordState() {
       if (this.confirmPassword == null) {
         return null;
@@ -167,7 +150,6 @@ export default {
         return 'Please enter your password again.'
       }
     },
-
     termsState() {
       if (this.terms == null) {
         return null;
@@ -181,7 +163,6 @@ export default {
         return 'You must agree to the Terms of Service'
       }
     },
-
     formState() {
       return ((this.usernameState && this.emailState && this.passwordState
       && this.confirmPasswordState && this.termsState) == true)

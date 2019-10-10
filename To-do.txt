@@ -4,3 +4,7 @@ v-if for changing rarely
 ------------------------------------------
 
 Find a use for Slots and Mixins
+
+------------------------------------------
+
+Find difference between Vue Watchers and computed
