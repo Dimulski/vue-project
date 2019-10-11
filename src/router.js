@@ -5,8 +5,8 @@ import Register from './views/Register.vue'
 import Contact from './views/Contact.vue'
 import Blog from './views/Blog.vue'
 import Post from './views/Post.vue'
-import Test from './views/Test.vue'
 import Tasks from './views/Tasks.vue'
+import Photos from './views/Photos.vue'
 
 Vue.use(Router)
 
@@ -53,9 +53,9 @@ export default new Router({
       component: Tasks
     },
     {
-      path: '/test',
-      name: 'test',
-      component: Test
+      path: '/photos',
+      name: 'photos',
+      component: Photos
     }
   ]
 })

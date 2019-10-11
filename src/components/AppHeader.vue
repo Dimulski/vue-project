@@ -13,7 +13,6 @@
             <b-nav-item  class="nav-link" to="/tasks" active-class="active">Tasks</b-nav-item>
             <b-nav-item  class="nav-link" to="/photos" active-class="active">Photos</b-nav-item>
             <b-nav-item  class="nav-link" to="/todos" active-class="active"><nobr>To-Do's</nobr></b-nav-item>
-            <b-nav-item  class="nav-link" to="/test" active-class="active"><nobr>Test</nobr></b-nav-item>
           </b-navbar-nav>
 
           <b-navbar-nav class="ml-auto">

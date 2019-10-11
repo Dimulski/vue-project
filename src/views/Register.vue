@@ -69,8 +69,14 @@
           </b-form-checkbox>
         </b-form-group>
 
-        <b-button type="submit" v-on:click="submitForm($event)" id="submit-button" 
-        class="btn-lg" variant="primary" :disabled="!formState">Register</b-button>
+        <b-button 
+          type="submit"
+          v-on:click="submitForm($event)" 
+          id="submit-button" 
+          class="btn-lg" 
+          variant="primary" 
+          :disabled="!formState">Register
+        </b-button>
       </b-form>
     </b-col>
     
@@ -78,7 +84,7 @@
       :duration="{ enter: 1800, leave: 800 }"
       v-on:after-enter="showMessage = false" 
       v-on:after-leave="redirectToHome">
-      <p id="message-sent" v-if="showMessage">Message sent!</p>
+      <p id="registered-message" v-if="showMessage">Registered Successfully!</p>
     </transition>
   </b-container>
 </template>
@@ -181,9 +187,6 @@ export default {
     }
   },
   methods: {
-    startLeaving() {
-      this.showMessage = false;
-    },
     redirectToHome() {
       this.$router.push({name: 'home'});
     },
@@ -199,7 +202,7 @@ export default {
 <style scoped>
 @import "../assets/css/generalForm.css";
 
-#message-sent {
+#registered-message {
   color: mediumseagreen;
   font-size: 2.5rem;
   text-align: center;

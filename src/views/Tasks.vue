@@ -1,7 +1,7 @@
 <template>
   <b-container class="main-content" xl="12">
     <b-row>
-      <h1 class="header">Tasks</h1>
+      <content-header>Tasks</content-header>
       <b-col cols="12" sm="6" lg="4" xl="3" v-for="task in tasks" :key="task.id">
         <b-card 
           :class="[task.completed ? 'completed' :  'in-progress']"
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import ContentHeader from '@/components/ContentHeader.vue'
 import axios from 'axios'
 
 export default {
@@ -21,6 +22,9 @@ export default {
     return {
       tasks: []
     }
+  },
+  components: {
+    ContentHeader
   },
   mounted() {
     axios

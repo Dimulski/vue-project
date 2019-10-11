@@ -1,5 +1,5 @@
 <template>
-  <b-navbar-brand><router-link to="/"><img alt="Vue logo" src="../assets/logo.png">vue-project</router-link></b-navbar-brand>
+  <b-navbar-brand><router-link to="/">vue-project</router-link></b-navbar-brand>
 </template>
 <script>
 export default {
@@ -21,7 +21,7 @@ a:hover {
 }
 
 img {
-  width: 2rem;
+  width: 1.3rem;
   margin-right: 5px;
 }
 </style>

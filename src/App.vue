@@ -47,8 +47,4 @@ export default {
   -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.25);
   box-shadow: 0 3px 20px rgba(0,0,0,.25);
 }
-
-.header {
-  margin-bottom: 45px;
-}
 </style>

@@ -8,9 +8,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueTelInput from 'vue-tel-input'
 import 'vue2-animate/dist/vue2-animate.min.css'
 import './filters'
+import VueLazyLoad from 'vue-lazyload'
 
 Vue.use(BootstrapVue)
 Vue.use(VueTelInput)
+Vue.use(VueLazyLoad)
 
 Vue.config.productionTip = false
 

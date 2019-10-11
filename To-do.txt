@@ -3,8 +3,17 @@ v-if for changing rarely
 
 ------------------------------------------
 
-Find a use for Slots and Mixins
+Find a use for Slots and Mixins ✓
 
 ------------------------------------------
 
-Find difference between Vue Watchers and computed
+Find difference between Vue Watchers and computed ✓
+
+Computed properties are cached based on their reactive dependencies.
+Methods are called each time
+
+Find a use for a watcher
+events
+next tick
+event prevent default Vue
+ * refactor ifs in form vues

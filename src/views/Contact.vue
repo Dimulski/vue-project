@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-col class="main-content" xl="5" lg="6" md="8" sm="10">
-      <h1 class="header">Contact</h1>
+      <content-header>Contact</content-header>
       <div class="text-danger general-error" v-if="shouldShowGeneralError">Please fill out the fields.</div>
       <b-form>
         <b-form-group 
@@ -31,9 +31,10 @@
 
         <b-form-group
           label="Phone number:"
+          ref="phoneNumber"
           :invalid-feedback="invalidPhone"
           :state="phoneState">
-          <vue-tel-input 
+          <vue-tel-input
             :state="phoneState"
             v-bind:class="[this.phone.valid == null ? 'form-control is-null' :  (this.phone.valid == true ? 'form-control is-valid' : 'form-control is-invalid')]"
             v-model="phone.number" 
@@ -53,14 +54,28 @@
           </b-form-textarea>
         </b-form-group>
 
-        <b-button type="submit" v-on:click="submitForm($event)" id="submit-button" 
-        class="btn-lg" variant="primary" :disabled="!formState">Submit</b-button>
+        <b-button 
+        type="submit" 
+        v-on:click="submitForm($event)" 
+        id="submit-button" 
+        class="btn-lg" 
+        variant="primary" 
+        :disabled="!formState">
+        Submit
+        </b-button>
       </b-form>
     </b-col>
+
+    <transition name="fadeUp"
+      :duration="{ enter: 1800, leave: 1800 }"
+      v-on:after-enter="showMessage = false">
+      <p id="message-sent" v-if="showMessage">Message Sent!</p>
+    </transition>
   </b-container>
 </template>
 
 <script>
+import ContentHeader from '@/components/ContentHeader.vue'
 import emailField from '../mixins/emailField.js'
 
 export default {
@@ -72,10 +87,14 @@ export default {
         fullNumber: null,
         valid: null
       },
-      message: null
+      message: null,
+      showMessage: false
     }
   },
   mixins:[emailField],
+  components: {
+    ContentHeader
+  },
   computed: {
     nameState() {
       if (this.name == null) {
@@ -141,14 +160,20 @@ export default {
   methods: {
     submitForm(event) {
       event.preventDefault();
-
-      if (this.formState) {
-        this.$router.push({name: 'home'});
-      }
+      this.clearForm();
+      this.showMessage = true;
     },
     updateNumber({number, isValid, country}) {
       this.phone.fullNumber = `+${country.dialCode} ${this.phone.number}`;
       this.phone.valid = isValid;
+    },
+    clearForm() {
+      this.name = null
+      this.phone.number = ''
+      this.phone.fullNumber = ''
+      this.phone.valid = null
+      this.message = null
+      this.email = null
     }
   }
 }
@@ -178,5 +203,15 @@ export default {
 
 textarea {
   height: 150px !important;
+}
+
+#message-sent {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  color: mediumseagreen;
+  font-size: 2rem;
+  text-align: right;
+  margin-top: 2rem;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
   <b-container class="main-content" xl="12">
     <b-row>
-      <h1 class="header">Blog Posts</h1>
-      <b-col cols="12" sm="6" lg="4" xl="3" v-for="post in posts" :key="post.id" >
+      <content-header>Blog Posts</content-header>
+      <b-col cols="12" sm="6" lg="4" xl="4" v-for="post in posts" :key="post.id" >
         <b-card :title='post.title | capitalize' align="left">
           <b-card-text>{{ post.body | capitalize | limit50Characters }}...</b-card-text>
-          <b-button class="btn-sm" :to="`posts/${post.id}`" variant="primary">Read More</b-button>
+          <b-button :to="`posts/${post.id}`" variant="primary">Read More</b-button>
         </b-card>
       </b-col>
     </b-row>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import ContentHeader from '@/components/ContentHeader.vue'
 import axios from 'axios'
 
 export default {
@@ -27,6 +28,9 @@ export default {
       .then(response => {
         this.posts = response.data.filter(task => task.id > 10 && task.id < 23)
       })
+  },
+  components: {
+    ContentHeader
   }
 }
 </script>
@@ -50,6 +54,5 @@ div [class*='col-'] {
 h1 {
   width: 110% !important;
   text-align: center;
-  margin-bottom: 25px;
 }
 </style>
