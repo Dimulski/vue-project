@@ -1,25 +1,34 @@
 <template>
   <b-container>
     <b-col class="main-content" xl="12">
-      <h1 id="title">{{ post.title | capitalize}}</h1>
-      <p id="body">{{ post.body | capitalize}}</p>
+      <h1 id="title">{{ post | capitalize}}</h1>
+      <p id="body">{{ post | capitalize}}</p>
     </b-col>
   </b-container>
 </template>
 
 <script>
 import axios from 'axios'
+import { mapState, mapGetters } from 'vuex'
+import { isNullOrUndefined } from 'util';
 
 export default {
-  data() {
-    return {
-      post: {}
-    }
-  },
+  computed: mapState({
+    post: state => state.blog.post
+  }),
   mounted() {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${this.$route.params.id}`)
-      .then(response => (this.post = response.data))
+    console.log(this.post)
+    const postId = this.$route.params.id;
+    console.log(postId)
+    if (isNullOrUndefined(this.post)) {
+      this.$store.dispatch('blog/loadPost', postId)
+      setTimeout(() => {
+        console.log(this.post)
+      }, 3000);
+    } else {
+      
+    }
+    this.$store.dispatch('blog/printId')
   }
 }
 </script>

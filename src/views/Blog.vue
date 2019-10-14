@@ -14,20 +14,14 @@
 
 <script>
 import ContentHeader from '@/components/ContentHeader.vue'
-import axios from 'axios'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-  data() {
-    return {
-      posts: []
-    }
-  },
-  mounted() {
-    axios
-      .get('https://jsonplaceholder.typicode.com/posts')
-      .then(response => {
-        this.posts = response.data.filter(task => task.id > 10 && task.id < 23)
-      })
+  computed: mapState({
+    posts: state => state.blog.posts
+  }),
+  mounted () {
+    this.$store.dispatch('blog/loadSelectedPosts')
   },
   components: {
     ContentHeader

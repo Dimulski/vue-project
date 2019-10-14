@@ -15,23 +15,17 @@
 
 <script>
 import ContentHeader from '@/components/ContentHeader.vue'
-import axios from 'axios'
+import { mapState } from 'vuex'
 
 export default {
-  data() {
-    return {
-      tasks: []
-    }
+  computed: mapState({
+    tasks: state => state.tasks.tasks
+  }),
+  mounted () {
+    this.$store.dispatch('tasks/loadSelectedTasks');
   },
   components: {
     ContentHeader
-  },
-  mounted() {
-    axios
-      .get('https://jsonplaceholder.typicode.com/todos')
-      .then(response => {
-        this.tasks = response.data.filter(task => task.id > 0 && task.id < 10)
-      })
   }
 }
 </script>
