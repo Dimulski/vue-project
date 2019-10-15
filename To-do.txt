@@ -17,3 +17,4 @@ events
 next tick
 event prevent default Vue
  * refactor ifs in form vues
+use custom style binding :style=

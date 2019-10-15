@@ -2,13 +2,10 @@ import axios from 'axios'
 
 const state = {
   posts: [],
-  post: null
+  post: {}
 }
 
 const getters = {
-  // getPostById: (state) => (id) => {
-  //   return state.posts.filter(post => post.id === id)
-  // }
 }
 
 const actions = {
@@ -26,18 +23,24 @@ const actions = {
         commit('setPosts', response.data.filter(post => post.id > 10 && post.id < 23))
       })
   },
-  loadPost ({ commit }, postId) {
+  fetchPostById ({ commit }, postId) {
     axios
       .get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
       .then(response => {
         commit('setPost', response.data)
       })
+  },
+  loadPost ({ commit }, post) {
+    commit('setPost', post)
   }
 }
 
 const mutations = {
   setPosts (state, posts) {
     state.posts = posts
+  },
+  setPost (state, post) {
+    state.post = post
   }
 }
 

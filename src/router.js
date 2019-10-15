@@ -7,6 +7,7 @@ import Blog from './views/Blog.vue'
 import Post from './views/Post.vue'
 import Tasks from './views/Tasks.vue'
 import Photos from './views/Photos.vue'
+import Todos from './views/Todos.vue'
 
 Vue.use(Router)
 
@@ -56,6 +57,11 @@ export default new Router({
       path: '/photos',
       name: 'photos',
       component: Photos
+    },
+    {
+      path: '/todos',
+      name: 'todos',
+      component: Todos
     }
   ]
 })
