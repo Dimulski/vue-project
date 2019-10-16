@@ -3,13 +3,16 @@ const state = {
   perPage: 10,
   currentPage: 1,
   rows: 0,
-  fields: ['id', 'title', 'is_completed', 'edit', 'delete'],
-  completed: false
+  fields: [{key: 'id', sortable: true }, 'title', 'is_completed', 'edit', 'delete'],
+  sortBy: 'id',
+  editField: null,
+  editFieldEditMode: false,
+  todoBeingEdited: {},
+  myTitle: ''
 }
 
 const getters = {
   currentPage (state) {
-    console.log(state.currentPage)
     return state.currentPage
   }
 }
@@ -21,19 +24,29 @@ const actions = {
       commit('setRows', todos.length)
     }))
   },
-  // loadAllTodos ({ commit }) {
-  //   axios
-  //     .get(`https://jsonplaceholder.typicode.com/todos`)
-  //     .then(response => {
-  //       commit('setTodos', response.data)
-  //       commit('setRows', response.data.length)
-  //     })
-  // },
   setCurrentPage ({ commit }, currentPage) {
     commit('setCurrentPage', currentPage)
   },
   setCompleted ({ commit }, completed) {
     commit('setCompleted', completed)
+  },
+  setEditField ({ commit }, editField) {
+    commit('setEditField', editField)
+  },
+  addTodo ({ commit }, title) {
+    commit('addTodo', title)
+  },
+  setEditFieldEditMode ({ commit }, mode) {
+    commit('setEditFieldEditMode', mode)
+  },
+  setTodoBeingEdited ({ commit }, todo) {
+    commit('setTodoBeingEdited', todo)
+  },
+  saveTodo ({ commit }, newTitle) {
+    commit('saveTodo', newTitle)
+  },
+  updateMyTitle ({ commit }, title) {
+    commit('updateMyTitle', title)
   }
 }
 
@@ -49,6 +62,34 @@ const mutations = {
   },
   setRows (state, rows) {
     state.rows = rows
+  },
+  setEditField (state, editField) {
+    state.editField = editField
+  },
+  addTodo (state, title) {
+    state.todos.push(
+      {
+        'userId': 1,
+        'id': state.todos.length + 1,
+        'title': title,
+        'completed': false
+      })
+    state.editField = null
+  },
+  setEditFieldEditMode (state, mode) {
+    state.editFieldEditMode = mode
+  },
+  setTodoBeingEdited (state, todo) {
+    state.todoBeingEdited = todo
+  },
+  saveTodo (state, newTitle) {
+    state.todos[state.todoBeingEdited.id - 1].title = newTitle
+    state.editField = null
+    state.editFieldEditMode = false
+    state.todoBeingEdited = {}
+  },
+  updateMyTitle (state, title) {
+    state.myTitle = title
   }
 }
 

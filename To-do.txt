@@ -18,3 +18,5 @@ next tick
 event prevent default Vue
  * refactor ifs in form vues
 use custom style binding :style=
+use emit to console.log to the parent ("i was clicked") by the child
+export titleState and titleValid to module file

@@ -2,33 +2,51 @@
   <b-container class="main-content" xl="12">
     <content-header>To-Do's</content-header>
     <b-col sm="11" class="mb-4 mx-auto">
-      <b-input-group>
-      <b-form-input id="editBox" class="mr-3">
-      </b-form-input>
-      <b-button variant="outline-success" @click="createTodo">Create</b-button>
-    </b-input-group>
+      <b-form-group
+      :invalid-feedback="invalidTitle"
+      :state="titleState">
+        <b-input-group>
+          <b-form-input
+            :state="titleState"
+            id="editBox"
+            v-model="editField"
+            @input="updateTitle()"
+            @blur="resetTitle()"
+            class="mr-3">
+          </b-form-input>
+          <b-button
+            variant="outline-primary"
+            @click="setTodo">
+            {{ this.editFieldEditMode ? 'Save' : 'Create'}}
+          </b-button>
+        </b-input-group>
+    </b-form-group>
     </b-col>
     <b-table
       id="todos-table"
       hover
-      striped
       :items="todos"
       :fields="fields"
-      
+      :tbody-tr-class="rowClass"
       :per-page="perPage"
-      :current-page="currentPage">
+      :current-page="currentPage"
+      :sort-by='sortBy'
+      :sort-desc="true">
+      <template v-slot:cell(title)="row">
+        <p :ref="`title-${row.item.id}`">{{row.item.title}}</p>
+      </template>
       <template v-slot:cell(edit)="row">
-        <b-button variant="outline-warning" size="sm" @click="row.toggleDetails">
+        <b-button variant="outline-warning" size="sm" @click="editTodo(row.item)">
         Edit
         </b-button>
       </template>
       <template v-slot:cell(delete)="row">
-        <b-button variant="outline-danger" size="sm" @click="row.toggleDetails">
+        <b-button variant="outline-danger" size="sm" @click="promptDelete(row.iten)"  v-b-modal.delete-modal>
         Delete
         </b-button>
       </template>
       <template v-slot:cell(is_completed)="row">
-        <b-form-checkbox size="lg" :class="[row.item.completed ? 'completed' : 'in-progress']" v-model="row.item.completed" switch></b-form-checkbox>
+        <b-form-checkbox size="lg" v-model="row.item.completed" switch></b-form-checkbox>
       </template>
     </b-table>
     <b-pagination
@@ -37,20 +55,28 @@
       :per-page="perPage"
       aria-controls="todos-table"
     ></b-pagination>
+    <b-modal id="delete-modal" title="Confirm Deletetion">
+      <p class="my-2">
+      Are you sure you want to delete We've added the utility class <code>'shadow'</code>
+      to the modal content for added effect.
+    </p>
+    </b-modal>
   </b-container>
 </template>
 
 <script>
 import ContentHeader from '@/components/ContentHeader.vue'
 import { mapState, mapActions, mapGetters } from 'vuex'
+import { isNullOrUndefined } from 'util'
 
 export default {
   computed: {
     ...mapState({
-    todos: state => state.todos.todos,
-    perPage: state => state.todos.perPage,
-    rows: state => state.todos.rows,
-    fields: state => state.todos.fields,
+      todos: state => state.todos.todos,
+      perPage: state => state.todos.perPage,
+      rows: state => state.todos.rows,
+      fields: state => state.todos.fields,
+      sortBy: state => state.todos.sortBy,
     }),
     currentPage: {
       get() { return this.$store.state.todos.currentPage },
@@ -59,7 +85,34 @@ export default {
     completed: {
       get() { return this.$store.state.todos.completed },
       set(value) { this.setCompleted(value) }
-    }
+    },
+    editField: {
+      get() { return this.$store.state.todos.editField },
+      set(value) { this.setEditField(value) }
+    },
+    editFieldEditMode: {
+      get() { return this.$store.state.todos.editFieldEditMode },
+      set(value) { this.setEditFieldEditMode(value) }
+    },
+    todoBeingEdited: {
+      get() { return this.$store.state.todos.todoBeingEdited },
+      set(value) { this.setTodoBeingEdited(value) }
+    },
+    titleState() {
+      if (this.editField == null) {
+        return null
+      }
+      return this.editField.length >= 5 && this.editField.length <= 80
+    },
+    invalidTitle() {
+      if (this.editField == null || (this.editField.length >= 5 && this.editField.length <= 80)) {
+        return ''
+      } else if (this.editField.length < 5 || this.editField.length > 80) {
+        return 'Title must be between 5 and 80 characters.'
+      } else {
+        return 'Please enter a todo title.'
+      }
+    },
   },
   mounted () {
     this.loadTodos()
@@ -68,10 +121,41 @@ export default {
     ...mapActions({
       loadTodos: 'todos/loadAllTodos',
       setCurrentPage: 'todos/setCurrentPage',
-      setCompleted: 'todos/setCompleted'
+      setCompleted: 'todos/setCompleted',
+      setEditField: 'todos/setEditField',
+      addTodo: 'todos/addTodo',
+      setEditFieldEditMode: 'todos/setEditFieldEditMode',
+      setTodoBeingEdited: 'todos/setTodoBeingEdited',
+      saveTodo: 'todos/saveTodo',
     }),
-    createTodo() {
-      console.log('creating')
+    setTodo() {
+      if (this.editFieldEditMode) {
+        this.saveTodo(this.editField)
+      } else if (this.editField != '' && !isNullOrUndefined(this.editField)) {
+        this.addTodo(this.editField)
+      } else {
+        this.editField = ''
+      }
+    },
+    editTodo(todo) {
+      this.setEditField(todo.title)
+      this.setEditFieldEditMode(true)
+      this.setTodoBeingEdited(todo)
+    },
+    rowClass(item, type) {
+      if (!item) return
+      return item.completed ? 'completed' : 'in-progress'
+    },
+    promptDelete(todo) {
+      this.setTodoBeingEdited(todo)
+    },
+    updateTitle() {
+      if (this.todoBeingEdited.id) {
+        this.$refs[`title-${this.todoBeingEdited.id}`].textContent = this.editField
+      }
+    },
+    resetTitle() {
+      this.$refs[`title-${this.todoBeingEdited.id}`].textContent = this.todoBeingEdited.title
     }
   },
   components: {
@@ -85,12 +169,24 @@ export default {
   border-radius: 0.25rem;
 }
 
-.completed {
-  background-color: green
+div >>> .completed {
+  color: green;
 }
 
-.in-progress {
+div >>> .completed:hover {
+  color: #28a745 !important;
+}
 
+div >>> .in-progress {
+  color: red;
+}
+div >>> .in-progress:hover {
+  color: #dc3545 !important;
+}
+
+.form-control {
+  width: 87%;
+  display: flex;
 }
 
 #switch {

@@ -15,5 +15,6 @@ export default new Vuex.Store({
     tasks,
     photos,
     todos
-  }
+  },
+  strict: true
 })
