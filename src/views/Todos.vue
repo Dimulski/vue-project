@@ -11,7 +11,6 @@
             id="editBox"
             v-model="editField"
             @input="updateTitle()"
-            @blur="resetTitle()"
             class="mr-3">
           </b-form-input>
           <b-button
@@ -138,6 +137,9 @@ export default {
       }
     },
     editTodo(todo) {
+      if (this.todoBeingEdited.id) {
+        this.$refs[`title-${this.todoBeingEdited.id}`].textContent = this.todoBeingEdited.title
+      }
       this.setEditField(todo.title)
       this.setEditFieldEditMode(true)
       this.setTodoBeingEdited(todo)

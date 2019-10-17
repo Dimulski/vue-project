@@ -2,19 +2,20 @@
   <b-container class="main-content" xl="12">
     <b-row>
       <content-header>Tasks</content-header>
-      <b-col cols="12" sm="6" lg="4" xl="3" v-for="task in tasks" :key="task.id">
+      <content-box v-for="task in tasks" :key="task.id">
         <b-card 
           :class="[task.completed ? 'completed' :  'in-progress']"
           :title='task.title' align="left">
           <b-card-text>{{ task.completed ? 'Completed' : 'In Progress' }}</b-card-text>
         </b-card>
-      </b-col>
+      </content-box>
     </b-row>
   </b-container>
 </template>
 
 <script>
 import ContentHeader from '@/components/ContentHeader.vue'
+// import ContentBox from '@/components/ContentBox.vue'
 import { mapState } from 'vuex'
 
 export default {
@@ -25,7 +26,8 @@ export default {
     this.$store.dispatch('tasks/loadSelectedTasks');
   },
   components: {
-    ContentHeader
+    ContentHeader,
+    // ContentBox
   }
 }
 </script>

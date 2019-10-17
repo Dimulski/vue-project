@@ -7,8 +7,7 @@ const state = {
   sortBy: 'id',
   editField: null,
   editFieldEditMode: false,
-  todoBeingEdited: {},
-  myTitle: ''
+  todoBeingEdited: {}
 }
 
 const getters = {
@@ -44,9 +43,6 @@ const actions = {
   },
   saveTodo ({ commit }, newTitle) {
     commit('saveTodo', newTitle)
-  },
-  updateMyTitle ({ commit }, title) {
-    commit('updateMyTitle', title)
   }
 }
 
@@ -87,9 +83,6 @@ const mutations = {
     state.editField = null
     state.editFieldEditMode = false
     state.todoBeingEdited = {}
-  },
-  updateMyTitle (state, title) {
-    state.myTitle = title
   }
 }
 

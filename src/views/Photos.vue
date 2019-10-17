@@ -1,17 +1,18 @@
 <template>
-  <b-container class="main-content" xl="12">
-    <b-row>
-      <content-header>Photos</content-header>
-      <b-col cols="12" sm="6" lg="4" xl="3" v-for="photo in photos" :key="photo.id">
+  <main-content>
+    <!-- <template v-slot:title>Photos</template>
+    <template v-slot:body v-for="photo in photos" :key="photo.id">
         <b-card-img-lazy :top='true' :offset='360' :src='photo.url' alt="Image" bottom></b-card-img-lazy>
         <b-card-title>{{ photo.title }}</b-card-title>
-      </b-col>
-    </b-row>
-  </b-container>
+    </template>
+    <template v-slot:body>
+        nothing lol
+    </template> -->
+  </main-content>
 </template>
 
 <script>
-import ContentHeader from '@/components/ContentHeader.vue'
+import MainContent from '@/components/MainContent.vue'
 import { mapState } from 'vuex'
 
 export default {
@@ -22,7 +23,7 @@ export default {
     this.$store.dispatch('photos/load35RandomPhotos')
   },
   components: {
-    ContentHeader
+    MainContent
   }
 }
 </script>

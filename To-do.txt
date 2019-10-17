@@ -20,3 +20,7 @@ event prevent default Vue
 use custom style binding :style=
 use emit to console.log to the parent ("i was clicked") by the child
 export titleState and titleValid to module file
+
+<Content-wrapper prop header>
+  <C HEADER, prop s header>
+  <C BOX> SLOT </CBOX
