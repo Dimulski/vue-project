@@ -5,6 +5,7 @@ import post from './modules/post'
 import tasks from './modules/tasks'
 import photos from './modules/photos'
 import todos from './modules/todos'
+import contact from './modules/contact'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     post,
     tasks,
     photos,
-    todos
+    todos,
+    contact
   }
 })

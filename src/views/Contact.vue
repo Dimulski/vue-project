@@ -77,85 +77,46 @@
 <script>
 import ContentHeader from '@/components/ContentHeader.vue'
 import emailField from '../mixins/emailField.js'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-  data() {
-    return {
-      name: null,
-      phone: {
-        number: null,
-        fullNumber: null,
-        valid: null
-      },
-      message: null,
-      showMessage: false
+  computed: {
+    ...mapState({
+      // name: state => state.contact.name,
+      // phone: state => state.contact.phone,
+      // message: state => state.contact.message,
+      // showMessage: state => state.contact.showMessage
+    }),
+    ...mapGetters({
+      nameState: 'contact/nameState',
+      invalidName: 'contact/invalidName',
+      phoneState: 'contact/phoneState',
+      invalidPhone: 'contact/invalidPhone',
+      messageState: 'contact/messageState',
+      invalidMessage: 'contact/invalidMessage',
+      formState: 'contact/formState',
+      shouldShowGeneralError: 'contact/shouldShowGeneralError'
+    }),
+    name: {
+      get() { return this.$store.state.name },
+      set(newName) { this.$store.dispatch('setName', newName)}
+    },
+    phone: {
+      get() { return this.$store.state.phone },
+      set(newPhone) { this.$store.dispatch('setPhone', newPhone) }
+    },
+    message: {
+      get() { return this.$store.state.message },
+      set(newMessage) { this.$store.dispatch('setMessage', newMessage)}
+    },
+    showMessage: {
+      get() { return this.$store.state.showMessage },
+      set(value) { this.$store.dispatch('setShowMessage', value) }
     }
   },
   mixins:[emailField],
   components: {
     ContentHeader
-  },
-  computed: {
-    nameState() {
-      if (this.name == null) {
-        return null
-      }
-      return this.name.length >= 4 && this.name.length <= 20 ? true : false;
-    },
-    invalidName() {
-      if (this.name == null) {
-        return ''
-      } else if (this.name.length > 4 && this.name.length <= 20) {
-        return ''
-      } else if (this.name.length > 0 || this.name.length > 20) {
-        return 'Name must be between 4 and 20 characters.'
-      } else {
-        return 'Please enter your name.'
-      }
-    },
-    phoneState() {
-      if (this.phone.valid == null) {
-        return null
-      }
-      return this.phone.valid
-    },
-    invalidPhone() {
-      if (this.phone.valid == null) {
-        return ''
-      } else if (this.phone.number === undefined) {
-        return `${this.phone.number} is not a valid number.`
-      } else if (!this.phone.isValid) {
-        return `${this.phone.fullNumber} is not a valid number.`
-      }
-    },
-
-    messageState() {
-      if (this.message == null) {
-        return null
-      }
-      return this.message.length >= 4 && this.message.length <= 20
-    },
-    invalidMessage() {
-      if (this.message == null) {
-        return ''
-      } else if (this.message.length < 4 || this.message.length > 500) {
-        return 'The message must be between 4 and 500 characters.'
-      }
-    },
-    formState() {
-      return ((this.nameState && this.emailState && this.phoneState && this.messageState) == true)
-    },
-    shouldShowGeneralError() {
-      if (
-        this.name == null ||
-        this.email == null ||
-        this.phone.valid == null ||
-        this.message == null) {
-          return false;
-        } else {
-          return !this.formState;
-        }
-    }
   },
   methods: {
     submitForm(event) {

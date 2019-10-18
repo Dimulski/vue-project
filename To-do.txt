@@ -24,3 +24,42 @@ export titleState and titleValid to module file
 <Content-wrapper prop header>
   <C HEADER, prop s header>
   <C BOX> SLOT </CBOX
+
+export magic numbers in Contact.js to constants
+
+
+
+------------- LEARN THIS -----------------
+Additional:
+- docker basics
+- localStorage and sessionStorage
+- design patterns most popular
+- typescript
+- babel
+- sessions basics
+- jwt token
+
+
+JS:
+- javascript hoisting
+- const
+- Promise, Promise all, callbacks
+- async await
+- event loops, event queue, web api
+- this inside arrow functions
+- setTimeout
+- ajax and feth
+- setInterval
+- DOM Tree
+
+
+Vue: 
+- Virtual dom
+- Computed vs watcher
+- Slot named slots
+- ref
+- mixins
+- props
+- v-bind
+- lifecycle hooks
+- server side rendering

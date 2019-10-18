@@ -8,7 +8,7 @@
 export default {
   methods: {
     emitHovered () {
-      this.$emit('custom-hovered');
+      this.$emit('my-custom-emit');
     }
   }
 }

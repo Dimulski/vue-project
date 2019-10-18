@@ -1,29 +1,42 @@
 <template>
-  <main-content>
-    <!-- <template v-slot:title>Photos</template>
-    <template v-slot:body v-for="photo in photos" :key="photo.id">
-        <b-card-img-lazy :top='true' :offset='360' :src='photo.url' alt="Image" bottom></b-card-img-lazy>
-        <b-card-title>{{ photo.title }}</b-card-title>
-    </template>
+  <main-content title="Photos">
     <template v-slot:body>
-        nothing lol
-    </template> -->
+      <b-row v-for="row in getRows" :key="row">
+        <list-item v-for="item in getItemsPerRowFromStore(row)" :key="item.id">
+          <b-card-img-lazy :top='true' :offset='360' :src='item.url' alt="Image" bottom></b-card-img-lazy>
+          <b-card-title>{{ item.title }}</b-card-title>
+        </list-item>
+      </b-row>
+    </template>
   </main-content>
 </template>
 
 <script>
 import MainContent from '@/components/MainContent.vue'
-import { mapState } from 'vuex'
+import ListItem from '@/components/ListItem.vue'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-  computed: mapState({
-    photos: state => state.photos.photos
-  }),
+  computed: {
+    ...mapState({
+      photos: state => state.photos.photos,
+    }),
+    ...mapGetters({
+      getRows: 'photos/getRows',
+      getItemsForRow: 'photos/getItemsForRow'
+    })
+  },
   mounted () {
     this.$store.dispatch('photos/load35RandomPhotos')
   },
+  methods: {
+    getItemsPerRowFromStore(row) {
+      return this.getItemsForRow(row)
+    }
+  },
   components: {
-    MainContent
+    MainContent,
+    ListItem
   }
 }
 </script>

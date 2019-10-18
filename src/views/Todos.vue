@@ -79,7 +79,8 @@ export default {
     }),
     currentPage: {
       get() { return this.$store.state.todos.currentPage },
-      set(value) { this.setCurrentPage(value) }
+      // set(value) { this.setCurrentPage(value) }
+      set(value) { this.$store.commit('setCurrentPage', value) }
     },
     completed: {
       get() { return this.$store.state.todos.completed },

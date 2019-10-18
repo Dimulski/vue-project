@@ -4,12 +4,23 @@ const state = {
   posts: [],
   post: {},
   itemsPerRow: 3,
-  rows: 0
+  rows: 3
 }
 
 const getters = {
-  getPosts () {
-    return this.posts
+  getRows: state => {
+    return Math.ceil(state.posts.length / state.itemsPerRow)
+  },
+  getItemsForRow: (state) => (row) => {
+    let items = []
+    let startingIndex = (state.itemsPerRow * (row - 1))
+    for (let i = startingIndex, y = 0; i < startingIndex + state.itemsPerRow; i++, y++) {
+      if (state.posts[i]) {
+        items[y] = state.posts[i]
+      }
+    }
+
+    return items
   }
 }
 
@@ -25,12 +36,7 @@ const actions = {
     axios
       .get('https://jsonplaceholder.typicode.com/posts')
       .then(response => {
-        commit('setPosts', response.data.filter(post => post.id > 10 && post.id < 23))
-        setTimeout(() => {
-          console.log(this.getPosts())
-        }, 3000);
-        console.log(getPosts())
-        commit('setRows', Math.ceil(response.data.length / this.itemsPerRow))
+        commit('setPosts', response.data.filter(post => post.id > 10 && post.id < 22))
       })
   },
   fetchPostById ({ commit }, postId) {

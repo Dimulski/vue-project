@@ -1,33 +1,45 @@
 <template>
-  <b-container class="main-content" xl="12">
-    <b-row>
-      <content-header>Tasks</content-header>
-      <content-box v-for="task in tasks" :key="task.id">
-        <b-card 
-          :class="[task.completed ? 'completed' :  'in-progress']"
-          :title='task.title' align="left">
-          <b-card-text>{{ task.completed ? 'Completed' : 'In Progress' }}</b-card-text>
+  <main-content title="Task">
+    <template v-slot:body>
+      <b-row v-for="row in getRows" :key="row">
+        <list-item v-for="item in getItemsPerRowFromStore(row)" :key="item.id">
+          <b-card 
+            :class="[item.completed ? 'completed' : 'in-progress']"
+            :title='item.title' align="left">
+          <b-card-text>{{ item.completed ? 'Completed' : 'In Progress' }}</b-card-text>
         </b-card>
-      </content-box>
-    </b-row>
-  </b-container>
+        </list-item>
+      </b-row>
+    </template>
+  </main-content>
 </template>
 
 <script>
-import ContentHeader from '@/components/ContentHeader.vue'
-// import ContentBox from '@/components/ContentBox.vue'
-import { mapState } from 'vuex'
+import MainContent from '@/components/MainContent.vue'
+import ListItem from '@/components/ListItem.vue'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-  computed: mapState({
-    tasks: state => state.tasks.tasks
-  }),
+  computed: {
+    ...mapState({
+      tasks: state => state.tasks.tasks
+    }),
+    ...mapGetters({
+      getRows: 'tasks/getRows',
+      getItemsForRow: 'tasks/getItemsForRow'
+    })
+  },
   mounted () {
     this.$store.dispatch('tasks/loadSelectedTasks');
   },
+  methods: {
+    getItemsPerRowFromStore(row) {
+      return this.getItemsForRow(row)
+    }
+  },
   components: {
-    ContentHeader,
-    // ContentBox
+    MainContent,
+    ListItem
   }
 }
 </script>

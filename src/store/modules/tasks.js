@@ -1,12 +1,26 @@
 import axios from 'axios'
 
-// initial state
 const state = {
-  tasks: []
+  tasks: [],
+  itemsPerRow: 3,
+  rows: 3
 }
 
 const getters = {
+  getRows: state => {
+    return Math.ceil(state.tasks.length / state.itemsPerRow)
+  },
+  getItemsForRow: (state) => (row) => {
+    let items = []
+    let startingIndex = (state.itemsPerRow * (row - 1))
+    for (let i = startingIndex, y = 0; i < startingIndex + state.itemsPerRow; i++, y++) {
+      if (state.tasks[i]) {
+        items[y] = state.tasks[i]
+      }
+    }
 
+    return items
+  }
 }
 
 const actions = {

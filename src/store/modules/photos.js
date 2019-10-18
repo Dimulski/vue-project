@@ -1,10 +1,26 @@
 import axios from 'axios'
 
 const state = {
-  photos: []
+  photos: [],
+  itemsPerRow: 3,
+  rows: 3
 }
 
 const getters = {
+  getRows: state => {
+    return Math.ceil(state.photos.length / state.itemsPerRow)
+  },
+  getItemsForRow: (state) => (row) => {
+    let items = []
+    let startingIndex = (state.itemsPerRow * (row - 1))
+    for (let i = startingIndex, y = 0; i < startingIndex + state.itemsPerRow; i++, y++) {
+      if (state.photos[i]) {
+        items[y] = state.photos[i]
+      }
+    }
+
+    return items
+  }
 }
 
 const actions = {
