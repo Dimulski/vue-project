@@ -55,11 +55,15 @@ JS:
 
 Vue: 
 - Virtual dom
-- Computed vs watcher
-- Slot named slots
+- Computed vs watcher ✓
+- Slot named slots ✓
 - ref
 - mixins
 - props
 - v-bind
 - lifecycle hooks
 - server side rendering
+
+
+- filter, map, reduce, Find
+- destructuring

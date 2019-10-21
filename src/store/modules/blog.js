@@ -21,6 +21,9 @@ const getters = {
     }
 
     return items
+  },
+  getCombinedTitleLength: state => {
+    return state.posts.reduce((totalLength, currentPost) => totalLength + currentPost.title.length, 0)
   }
 }
 

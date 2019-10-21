@@ -18,6 +18,7 @@
 import MainContent from '@/components/MainContent.vue'
 import ListItem from '@/components/ListItem.vue'
 import { mapState, mapActions, mapGetters } from 'vuex'
+import { nextTick } from 'q'
 
 export default {
   computed: {
@@ -27,11 +28,20 @@ export default {
     }),
     ...mapGetters({
       getRows: 'blog/getRows',
-      getItemsForRow: 'blog/getItemsForRow'
+      getItemsForRow: 'blog/getItemsForRow',
+      getCombinedTitleLength: 'blog/getCombinedTitleLength'
     })
+  },
+  watch: {
+    posts: function () {
+      console.log(`Combined title length is ${this.getCombinedTitleLength}`)
+    }
   },
   mounted () {
     this.$store.dispatch('blog/loadSelectedPosts')
+    
+    // console.log(this.getCombinedTitleLength))
+    
   },
   components: {
     MainContent,

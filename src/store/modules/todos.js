@@ -43,6 +43,12 @@ const actions = {
   },
   saveTodo ({ commit }, newTitle) {
     commit('saveTodo', newTitle)
+  },
+  resetEdit ({ commit }) {
+    commit('resetEdit')
+  },
+  deleteTodo ({ commit }, todo) {
+    commit('deleteTodo', todo)
   }
 }
 
@@ -80,9 +86,14 @@ const mutations = {
   },
   saveTodo (state, newTitle) {
     state.todos[state.todoBeingEdited.id - 1].title = newTitle
+  },
+  resetEdit (state) {
     state.editField = null
     state.editFieldEditMode = false
     state.todoBeingEdited = {}
+  },
+  deleteTodo (state, todoToDelete) {
+    state.todos.splice(state.todos.findIndex(todo => todo.id === todoToDelete.id), 1)
   }
 }
 

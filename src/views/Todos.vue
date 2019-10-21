@@ -40,7 +40,7 @@
         </b-button>
       </template>
       <template v-slot:cell(delete)="row">
-        <b-button variant="outline-danger" size="sm" @click="promptDelete(row.iten)"  v-b-modal.delete-modal>
+        <b-button variant="outline-danger" size="sm" @click="promptDelete(row.item)"  v-b-modal.delete-modal>
         Delete
         </b-button>
       </template>
@@ -54,11 +54,22 @@
       :per-page="perPage"
       aria-controls="todos-table"
     ></b-pagination>
-    <b-modal id="delete-modal" title="Confirm Deletetion">
-      <p class="my-2">
-      Are you sure you want to delete We've added the utility class <code>'shadow'</code>
-      to the modal content for added effect.
-    </p>
+
+    <b-modal id="delete-modal">
+      <template v-slot:modal-header="{ close }">
+        <h5>Confirm Deletion</h5>
+      </template>
+      <template v-slot:default="{ hide }">
+        <p>Are you sure you want to delete todo "{{todoBeingEdited.title}}"</p>
+      </template>
+      <template v-slot:modal-footer="{ hide }">      
+        <b-button variant="danger" @click="confirmDelete">
+          Delete
+        </b-button>
+        <b-button variant="outline-secondary" @click="hide('forget')">
+          Cancel
+        </b-button>
+      </template>
     </b-modal>
   </b-container>
 </template>
@@ -79,12 +90,7 @@ export default {
     }),
     currentPage: {
       get() { return this.$store.state.todos.currentPage },
-      // set(value) { this.setCurrentPage(value) }
-      set(value) { this.$store.commit('setCurrentPage', value) }
-    },
-    completed: {
-      get() { return this.$store.state.todos.completed },
-      set(value) { this.setCompleted(value) }
+      set(value) { this.setCurrentPage(value) }
     },
     editField: {
       get() { return this.$store.state.todos.editField },
@@ -114,10 +120,20 @@ export default {
       }
     },
   },
+  watch: {
+    todos: function (newValues, oldValues) {
+      console.log(`Todo ids with leading 0's: ${newValues.map(todo => String(todo.id).padStart(2, 0))}`)
+    }
+  },
   mounted () {
     this.loadTodos()
   },
   methods: {
+    data() {
+      return {
+        initialFieldValue: ''
+      }
+    },
     ...mapActions({
       loadTodos: 'todos/loadAllTodos',
       setCurrentPage: 'todos/setCurrentPage',
@@ -127,10 +143,13 @@ export default {
       setEditFieldEditMode: 'todos/setEditFieldEditMode',
       setTodoBeingEdited: 'todos/setTodoBeingEdited',
       saveTodo: 'todos/saveTodo',
+      resetEdit: 'todos/resetEdit',
+      deleteTodo: 'todos/deleteTodo'
     }),
     setTodo() {
       if (this.editFieldEditMode) {
         this.saveTodo(this.editField)
+        this.resetEdit()
       } else if (this.editField != '' && !isNullOrUndefined(this.editField)) {
         this.addTodo(this.editField)
       } else {
@@ -139,26 +158,34 @@ export default {
     },
     editTodo(todo) {
       if (this.todoBeingEdited.id) {
-        this.$refs[`title-${this.todoBeingEdited.id}`].textContent = this.todoBeingEdited.title
+        this.saveTodo(this.initialFieldValue)
+        this.setEditField(todo.title)
+        this.setEditFieldEditMode(true)
+        this.setTodoBeingEdited(todo)
+        this.initialFieldValue = todo.title
+      } else {
+        this.initialFieldValue = todo.title;
+        this.setEditField(todo.title)
+        this.setEditFieldEditMode(true)
+        this.setTodoBeingEdited(todo)
       }
-      this.setEditField(todo.title)
-      this.setEditFieldEditMode(true)
-      this.setTodoBeingEdited(todo)
     },
     rowClass(item, type) {
       if (!item) return
       return item.completed ? 'completed' : 'in-progress'
     },
     promptDelete(todo) {
+      this.setEditField(null)
+      this.setEditFieldEditMode(false)
       this.setTodoBeingEdited(todo)
     },
     updateTitle() {
       if (this.todoBeingEdited.id) {
-        this.$refs[`title-${this.todoBeingEdited.id}`].textContent = this.editField
+        this.saveTodo(this.editField)
       }
     },
-    resetTitle() {
-      this.$refs[`title-${this.todoBeingEdited.id}`].textContent = this.todoBeingEdited.title
+    confirmDelete() {
+      this.deleteTodo(this.todoBeingEdited)
     }
   },
   components: {
