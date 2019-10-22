@@ -107,13 +107,13 @@ export default {
         return 'Please enter your name.'
       }
     },
-    phoneState() {
+    phoneState () {
       if (this.phone.valid == null) {
         return null
       }
       return this.phone.valid
     },
-    invalidPhone() {
+    invalidPhone () {
       if (this.phone.valid == null) {
         return ''
       } else if (this.phone.number === undefined) {
@@ -121,21 +121,23 @@ export default {
       } else if (!this.phone.isValid) {
         return `${this.phone.fullNumber} is not a valid number.`
       }
+      return ''
     },
-    messageState() {
+    messageState () {
       if (this.message == null) {
         return null
       }
       return this.message.length >= 4 && this.message.length <= 20
     },
-    invalidMessage() {
+    invalidMessage () {
       if (this.message == null) {
         return ''
       } else if (this.message.length < 4 || this.message.length > 500) {
         return 'This message must be between 4 and 500 characters'
       }
+      return ''
     },
-    formState() {
+    formState () {
       return ((this.nameState && this.emailState && this.phoneState && this.messageState) == true)
     },
     shouldShowGeneralError() {
@@ -156,11 +158,11 @@ export default {
       this.clearForm();
       this.showMessage = true;
     },
-    updateNumber({number, isValid, country}) {
+    updateNumber({isValid, country}) {
       this.phone.fullNumber = `+${country.dialCode} ${this.phone.number}`;
       this.phone.valid = isValid;
     },
-    clearForm() {
+    clearForm () {
       this.name = null
       this.phone.number = ''
       this.phone.fullNumber = ''

@@ -55,7 +55,7 @@
       aria-controls="todos-table"
     ></b-pagination>
 
-    <b-modal id="delete-modal">
+    <b-modal ref="delete-modal" id="delete-modal">
       <template v-slot:modal-header="{ close }">
         <h5>Confirm Deletion</h5>
       </template>
@@ -66,7 +66,7 @@
         <b-button variant="danger" @click="confirmDelete">
           Delete
         </b-button>
-        <b-button variant="outline-secondary" @click="hide('forget')">
+        <b-button variant="outline-secondary" @click="cancelDelete">
           Cancel
         </b-button>
       </template>
@@ -76,7 +76,7 @@
 
 <script>
 import ContentHeader from '@/components/ContentHeader.vue'
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { isNullOrUndefined } from 'util'
 
 export default {
@@ -121,12 +121,13 @@ export default {
     },
   },
   watch: {
-    todos: function (newValues, oldValues) {
+    todos: function (newValues) {
       console.log(`Todo ids with leading 0's: ${newValues.map(todo => String(todo.id).padStart(2, 0))}`)
     }
   },
   mounted () {
     this.loadTodos()
+    this.printDestructuringExample()
   },
   methods: {
     data() {
@@ -164,28 +165,52 @@ export default {
         this.setTodoBeingEdited(todo)
         this.initialFieldValue = todo.title
       } else {
-        this.initialFieldValue = todo.title;
+        this.initialFieldValue = todo.title
         this.setEditField(todo.title)
         this.setEditFieldEditMode(true)
         this.setTodoBeingEdited(todo)
       }
     },
-    rowClass(item, type) {
+    rowClass(item) {
       if (!item) return
       return item.completed ? 'completed' : 'in-progress'
     },
     promptDelete(todo) {
-      this.setEditField(null)
-      this.setEditFieldEditMode(false)
-      this.setTodoBeingEdited(todo)
+      if (this.todoBeingEdited.id) {
+        this.saveTodo(this.initialFieldValue)
+        this.setEditField(null)
+        this.setEditFieldEditMode(false)
+        this.setTodoBeingEdited(todo)
+      } else {
+        this.setEditField(null)
+        this.setEditFieldEditMode(false)
+        this.setTodoBeingEdited(todo)
+      }
+    },
+    cancelDelete() {
+      this.$refs['delete-modal'].hide()
+      this.setTodoBeingEdited({})
+    },
+    confirmDelete() {
+      this.deleteTodo(this.todoBeingEdited)
+      this.setTodoBeingEdited({})
+      this.$refs['delete-modal'].hide()
     },
     updateTitle() {
       if (this.todoBeingEdited.id) {
         this.saveTodo(this.editField)
       }
     },
-    confirmDelete() {
-      this.deleteTodo(this.todoBeingEdited)
+    printDestructuringExample() {
+      let a, b, c
+      [a, c] = [5, 10]
+      console.log(a)
+      console.log(b)
+      console.log(c)
+      ;({a, b, ...c} = {a: 10, b: 20, c: 30, c2: 40})
+      console.log(a)
+      console.log(b)
+      console.log(c)
     }
   },
   components: {

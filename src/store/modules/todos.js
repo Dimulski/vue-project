@@ -3,7 +3,7 @@ const state = {
   perPage: 10,
   currentPage: 1,
   rows: 0,
-  fields: [{key: 'id', sortable: true }, 'title', 'is_completed', 'edit', 'delete'],
+  fields: [{ key: 'id', sortable: true }, 'title', 'is_completed', 'edit', 'delete'],
   sortBy: 'id',
   editField: null,
   editFieldEditMode: false,

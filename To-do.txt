@@ -65,5 +65,11 @@ Vue:
 - server side rendering
 
 
-- filter, map, reduce, Find
-- destructuring
+- filter, map, reduce, Find ✓
+- destructuring ✓
+
+export getItemsForRow for reuse
+
+doker basics
+dockerfile
+docker-compose

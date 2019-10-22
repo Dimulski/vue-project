@@ -17,8 +17,7 @@
 <script>
 import MainContent from '@/components/MainContent.vue'
 import ListItem from '@/components/ListItem.vue'
-import { mapState, mapActions, mapGetters } from 'vuex'
-import { nextTick } from 'q'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   computed: {
@@ -39,9 +38,6 @@ export default {
   },
   mounted () {
     this.$store.dispatch('blog/loadSelectedPosts')
-    
-    // console.log(this.getCombinedTitleLength))
-    
   },
   components: {
     MainContent,
@@ -51,7 +47,7 @@ export default {
     logEmitter (title) {
       console.log(`${title} emitted an event`)
     },
-    getItemsPerRowFromStore(row) {
+    getItemsPerRowFromStore (row) {
       return this.getItemsForRow(row)
     }
   }

@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-// initial state
 const state = {
   post: Object
 }
