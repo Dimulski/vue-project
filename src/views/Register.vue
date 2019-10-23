@@ -113,9 +113,7 @@ export default {
       }
     },
     invalidUsername() {
-      if (this.username == null) {
-        return ''
-      } else if (this.username.length > 4 && this.username.length <= 20) {
+      if ((this.username.length > 4 && this.username.length <= 20) || this.username == null) {
         return ''
       } else if (this.username.length > 0 || this.username.length > 20) {
         return 'Username must be between 4 and 20 characters.'

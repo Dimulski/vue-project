@@ -29,7 +29,7 @@ export magic numbers in Contact.js to constants
 
 
 
-------------- LEARN THIS -----------------
+------------- LEARN THIS -------------
 Additional:
 - docker basics
 - localStorage and sessionStorage
@@ -38,7 +38,6 @@ Additional:
 - babel
 - sessions basics
 - jwt token
-
 
 JS:
 - javascript hoisting
@@ -52,8 +51,7 @@ JS:
 - setInterval
 - DOM Tree
 
-
-Vue: 
+Vue:
 - Virtual dom
 - Computed vs watcher ✓
 - Slot named slots ✓
@@ -73,3 +71,9 @@ export getItemsForRow for reuse
 doker basics
 dockerfile
 docker-compose
+
+git- branches and merging
+
+function closure
+Service worker
+dependency injection

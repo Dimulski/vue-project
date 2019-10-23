@@ -1,0 +1,104 @@
+[
+  {
+    "userId": 1,
+    "id": 1,
+    "title": "Find a use for Slots and Mixins",
+    "completed": true
+  },
+  {
+    "userId": 1,
+    "id": 2,
+    "title": "Find difference between Vue Watchers and computed",
+    "completed": true
+  },
+  {
+    "userId": 1,
+    "id": 3,
+    "title": "Find a use for a watcher",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 4,
+    "title": "Create a custom event with $emit",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 5,
+    "title": "Research nextTick",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 6,
+    "title": "Refactor ifs in form vues",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 7,
+    "title": "Use custom style binding :style=",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 8,
+    "title": "Use emit to console.log to the parent (\"i was clicked\") by the child",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 9,
+    "title": "Export titleState and titleValid to module file",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 10,
+    "title": "Research git branches and merging",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 11,
+    "title": "Research Server side rendering and Nuxt- basics",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 12,
+    "title": "Brush up on SOLID",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 13,
+    "title": "Research JWT",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 14,
+    "title": "Research service workers",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 15,
+    "title": "Research docker basics",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 16,
+    "title": "Make To-Do's save to json file",
+    "completed": false
+  },
+  {
+    "userId": 1,
+    "id": 17,
+    "title": "Create content-box",
+    "completed": true
+  }
+]

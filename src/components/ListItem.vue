@@ -1,5 +1,5 @@
 <template  >
-  <b-col v-on:mouseenter="emitHovered($event)" cols="12" sm="6" lg="4" xl="4">
+  <b-col v-on:mouseenter="emitHovered($event)" cols="12" sm="12" md="4" lg="4" xl="4">
     <slot></slot>
   </b-col>
 </template>
