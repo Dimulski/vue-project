@@ -8,6 +8,7 @@ import VueTelInput from 'vue-tel-input'
 import 'vue2-animate/dist/vue2-animate.min.css'
 import './filters'
 import store from './store'
+import './registerServiceWorker'
 
 Vue.use(BootstrapVue)
 Vue.use(VueTelInput)

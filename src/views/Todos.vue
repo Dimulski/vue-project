@@ -177,6 +177,7 @@ export default {
     },
     promptDelete(todo) {
       if (this.todoBeingEdited.id) {
+        console.log('here')
         this.saveTodo(this.initialFieldValue)
         this.setEditField(null)
         this.setEditFieldEditMode(false)

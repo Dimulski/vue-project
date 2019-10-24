@@ -77,3 +77,4 @@ git- branches and merging
 function closure
 Service worker
 dependency injection
+get post put delete
