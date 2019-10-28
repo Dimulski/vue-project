@@ -1,0 +1,13 @@
+Docker commands
+
+docker ps
+docker images
+docker container rm --force $containerName
+docker container run --publish 8000:8080 --detach --name bb dimulski/bulletinboard:1.0
+docker run hello-world
+docker image build -t bulletinboar1.0 . (in base project cd)
+systemctl --user start docker
+docker image push dimulski/bulletinboard:1.0
+docker rmi cheers
+docker system prune
+docker image tag bulletinboard:1.0 dimulski/bulletinboard:1.0
