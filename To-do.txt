@@ -78,3 +78,5 @@ function closure
 Service worker
 dependency injection
 get post put delete
+
+read about modules in javascript
