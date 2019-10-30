@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 const state = {
   todos: [],
   perPage: 10,
@@ -18,10 +20,12 @@ const getters = {
 
 const actions = {
   loadAllTodos ({ commit }) {
-    fetch('./todos.json').then(response => response.json().then(todos => {
-      commit('setTodos', todos)
-      commit('setRows', todos.length)
-    }))
+    axios
+      .get('http://localhost:8080/api/todos')
+      .then(response => {
+        commit('setTodos', response.data)
+        commit('setRows', response.data.length)
+      })
   },
   setCurrentPage ({ commit }, currentPage) {
     commit('setCurrentPage', currentPage)
@@ -41,8 +45,8 @@ const actions = {
   setTodoBeingEdited ({ commit }, todo) {
     commit('setTodoBeingEdited', todo)
   },
-  saveTodo ({ commit }, newTitle) {
-    commit('saveTodo', newTitle)
+  saveTodoTitle ({ commit }, newTitle) {
+    commit('saveTodoTitle', newTitle)
   },
   resetEdit ({ commit }) {
     commit('resetEdit')
@@ -84,7 +88,7 @@ const mutations = {
   setTodoBeingEdited (state, todo) {
     state.todoBeingEdited = todo
   },
-  saveTodo (state, newTitle) {
+  saveTodoTitle (state, newTitle) {
     state.todos[state.todoBeingEdited.id - 1].title = newTitle
   },
   resetEdit (state) {
@@ -94,6 +98,11 @@ const mutations = {
   },
   deleteTodo (state, todoToDelete) {
     state.todos.splice(state.todos.findIndex(todo => todo.id === todoToDelete.id), 1)
+  },
+  writeTodoToDatabase (state, todoToSave) {
+    axios.put(`http://localhost:8080/api/todos/${todoToSave.id}`,
+      {'id': todoToSave.id,'title': todoToSave.title,'completed': todoToSave.completed}
+    )
   }
 }
 

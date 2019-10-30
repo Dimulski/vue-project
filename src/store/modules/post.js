@@ -11,7 +11,7 @@ const getters = {
 const actions = {
   loadPost ({ commit }, postId) {
     axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+      .get(`http://localhost:8080/api/posts/${postId}`)
       .then(response => {
         commit('setPost', response.data)
       })

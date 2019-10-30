@@ -45,15 +45,15 @@
         </b-button>
       </template>
       <template v-slot:cell(is_completed)="row">
-        <b-form-checkbox size="lg" v-model="row.item.completed" switch></b-form-checkbox>
+        <b-form-checkbox size="lg" v-model="row.item.completed" @change="save(row.item)" switch></b-form-checkbox>
       </template>
     </b-table>
     <b-pagination
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
-      aria-controls="todos-table"
-    ></b-pagination>
+      aria-controls="todos-table">
+    </b-pagination>
 
     <b-modal ref="delete-modal" id="delete-modal">
       <template v-slot:modal-header="{ close }">
@@ -143,13 +143,19 @@ export default {
       addTodo: 'todos/addTodo',
       setEditFieldEditMode: 'todos/setEditFieldEditMode',
       setTodoBeingEdited: 'todos/setTodoBeingEdited',
-      saveTodo: 'todos/saveTodo',
+      saveTodoTitle: 'todos/saveTodoTitle',
       resetEdit: 'todos/resetEdit',
-      deleteTodo: 'todos/deleteTodo'
+      deleteTodo: 'todos/deleteTodo',
+      saveTodo: 'todos/saveTodo'
     }),
+    saveTodoStatus(todo) {
+      let alteredTodo = todo
+      alteredTodo.completed = !todo.completed
+      this.saveTodo(alteredTodo)
+    },
     setTodo() {
       if (this.editFieldEditMode) {
-        this.saveTodo(this.editField)
+        this.saveTodoTitle(this.editField)
         this.resetEdit()
       } else if (this.editField != '' && !isNullOrUndefined(this.editField)) {
         this.addTodo(this.editField)
@@ -159,7 +165,7 @@ export default {
     },
     editTodo(todo) {
       if (this.todoBeingEdited.id) {
-        this.saveTodo(this.initialFieldValue)
+        this.saveTodoTitle(this.initialFieldValue)
         this.setEditField(todo.title)
         this.setEditFieldEditMode(true)
         this.setTodoBeingEdited(todo)
@@ -178,7 +184,20 @@ export default {
     promptDelete(todo) {
       if (this.todoBeingEdited.id) {
         console.log('here')
-        this.saveTodo(this.initialFieldValue)
+        this.saveTodoTitle(this.initialFieldValue)
+        this.setEditField(null)
+        this.setEditFieldEditMode(false)
+        this.setTodoBeingEdited(todo)
+      } else {
+        this.setEditField(null)
+        this.setEditFieldEditMode(false)
+        this.setTodoBeingEdited(todo)
+      }
+    },
+    saveButton(todo) {
+      if (this.todoBeingEdited.id) {
+        console.log('here')
+        this.saveTodoTitle(this.initialFieldValue)
         this.setEditField(null)
         this.setEditFieldEditMode(false)
         this.setTodoBeingEdited(todo)
@@ -199,7 +218,7 @@ export default {
     },
     updateTitle() {
       if (this.todoBeingEdited.id) {
-        this.saveTodo(this.editField)
+        this.saveTodoTitle(this.editField)
       }
     },
     printDestructuringExample() {

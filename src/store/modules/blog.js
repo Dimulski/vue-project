@@ -30,21 +30,21 @@ const getters = {
 const actions = {
   loadAllPosts ({ commit }) {
     axios
-      .get('https://jsonplaceholder.typicode.com/posts')
+      .get('http://localhost:8080/api/posts')
       .then(response => {
         commit('setPosts', response.data)
       })
   },
   loadSelectedPosts ({ commit }) {
     axios
-      .get('https://jsonplaceholder.typicode.com/posts')
+      .get('http://localhost:8080/api/posts')
       .then(response => {
         commit('setPosts', response.data.filter(post => post.id > 10 && post.id < 22))
       })
   },
   fetchPostById ({ commit }, postId) {
     axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+      .get(`http://localhost:8080/api/posts/${postId}`)
       .then(response => {
         commit('setPost', response.data)
       })

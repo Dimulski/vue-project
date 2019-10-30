@@ -26,7 +26,7 @@ const getters = {
 const actions = {
   loadSelectedTasks ({ commit }) {
     axios
-      .get('https://jsonplaceholder.typicode.com/todos')
+      .get('http://localhost:8080/api/tasks')
       .then(response => {
         commit('setTasks', response.data.filter(task => task.id > 0 && task.id < 10))
       })

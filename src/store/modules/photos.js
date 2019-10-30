@@ -28,7 +28,7 @@ const actions = {
     commit('setPhotos', [])
     get35Random([...Array(50).keys()]).forEach(photoId => {
       axios
-        .get(`https://jsonplaceholder.typicode.com/photos/${photoId}`)
+        .get(`http://localhost:8080/api/photos/${photoId}`)
         .then(response => {
           commit('addPhoto', response.data)
         })
