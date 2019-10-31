@@ -38,6 +38,9 @@ const actions = {
   },
   addTodo ({ commit }, title) {
     commit('addTodo', title)
+    axios.post('http://localhost:8080/api/todos',
+      {'title': title,'completed': false}
+    )
   },
   setEditFieldEditMode ({ commit }, mode) {
     commit('setEditFieldEditMode', mode)
@@ -53,7 +56,13 @@ const actions = {
   },
   deleteTodo ({ commit }, todo) {
     commit('deleteTodo', todo)
-  }
+    axios.delete(`http://localhost:8080/api/todos/${todo.id}`)
+  },
+  saveTodo({}, todo) {
+    axios.put(`http://localhost:8080/api/todos/${todo.id}`,
+      {'id': todo.id,'title': todo.title,'completed': todo.completed}
+    )
+  },
 }
 
 const mutations = {
@@ -98,11 +107,6 @@ const mutations = {
   },
   deleteTodo (state, todoToDelete) {
     state.todos.splice(state.todos.findIndex(todo => todo.id === todoToDelete.id), 1)
-  },
-  writeTodoToDatabase (state, todoToSave) {
-    axios.put(`http://localhost:8080/api/todos/${todoToSave.id}`,
-      {'id': todoToSave.id,'title': todoToSave.title,'completed': todoToSave.completed}
-    )
   }
 }
 

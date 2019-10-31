@@ -40,12 +40,12 @@
         </b-button>
       </template>
       <template v-slot:cell(delete)="row">
-        <b-button variant="outline-danger" size="sm" @click="promptDelete(row.item)"  v-b-modal.delete-modal>
+        <b-button variant="outline-danger" size="sm" @click="promptDelete(row.item)" v-b-modal.delete-modal>
         Delete
         </b-button>
       </template>
       <template v-slot:cell(is_completed)="row">
-        <b-form-checkbox size="lg" v-model="row.item.completed" @change="save(row.item)" switch></b-form-checkbox>
+        <b-form-checkbox size="lg" v-model="row.item.completed" @change="saveStatus(row.item)" switch></b-form-checkbox>
       </template>
     </b-table>
     <b-pagination
@@ -146,9 +146,9 @@ export default {
       saveTodoTitle: 'todos/saveTodoTitle',
       resetEdit: 'todos/resetEdit',
       deleteTodo: 'todos/deleteTodo',
-      saveTodo: 'todos/saveTodo'
+      saveTodo: 'todos/saveTodo',
     }),
-    saveTodoStatus(todo) {
+    saveStatus(todo) {
       let alteredTodo = todo
       alteredTodo.completed = !todo.completed
       this.saveTodo(alteredTodo)
@@ -156,6 +156,7 @@ export default {
     setTodo() {
       if (this.editFieldEditMode) {
         this.saveTodoTitle(this.editField)
+        this.saveTodo(this.todoBeingEdited)
         this.resetEdit()
       } else if (this.editField != '' && !isNullOrUndefined(this.editField)) {
         this.addTodo(this.editField)
@@ -183,20 +184,16 @@ export default {
     },
     promptDelete(todo) {
       if (this.todoBeingEdited.id) {
-        console.log('here')
-        this.saveTodoTitle(this.initialFieldValue)
         this.setEditField(null)
         this.setEditFieldEditMode(false)
         this.setTodoBeingEdited(todo)
       } else {
-        this.setEditField(null)
-        this.setEditFieldEditMode(false)
         this.setTodoBeingEdited(todo)
       }
+      this.$refs['delete-modal'].show()
     },
     saveButton(todo) {
       if (this.todoBeingEdited.id) {
-        console.log('here')
         this.saveTodoTitle(this.initialFieldValue)
         this.setEditField(null)
         this.setEditFieldEditMode(false)
@@ -265,6 +262,19 @@ div >>> .in-progress:hover {
 }
 
 #switch {
+  user-select: none;
+}
+
+.table >>> td {
+  vertical-align: middle;
+}
+
+.table >>> td p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.table >>> tbody {
   user-select: none;
 }
 </style>
