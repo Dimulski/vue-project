@@ -1,8 +1,10 @@
 <template>
   <b-container>
     <b-col class="main-content" xl="12">
-      <h1 id="title">{{ post.title | capitalize}}</h1>
-      <p id="body">{{ post.body | capitalize}}</p>
+      <article>
+        <h1 id="title">{{ post.title | capitalize}}</h1>
+        <p id="body">{{ post.body | capitalize}}</p>
+      </article>
     </b-col>
   </b-container>
 </template>

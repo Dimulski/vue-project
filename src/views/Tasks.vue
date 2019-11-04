@@ -1,5 +1,5 @@
 <template>
-  <main-content title="Task">
+  <main-content title="Tasks">
     <template v-slot:body>
       <b-row v-for="row in getRows" :key="row">
         <list-item v-for="item in getItemsPerRowFromStore(row)" :key="item.id">
@@ -30,7 +30,7 @@ export default {
     })
   },
   mounted () {
-    this.$store.dispatch('tasks/loadSelectedTasks');
+    this.$store.dispatch('tasks/loadSelectedTasks')
   },
   methods: {
     getItemsPerRowFromStore(row) {
