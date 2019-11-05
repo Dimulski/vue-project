@@ -36,11 +36,11 @@ const actions = {
   setEditField ({ commit }, editField) {
     commit('setEditField', editField)
   },
-  addTodo ({ commit }, title) {
-    commit('addTodo', title)
-    axios.post('http://localhost:8080/api/todos',
+  async addTodo ({ commit }, title) {
+    const response = await axios.post('http://localhost:8080/api/todos',
       {'title': title,'completed': false}
     )
+    commit('addTodo', response.data)
   },
   setEditFieldEditMode ({ commit }, mode) {
     commit('setEditFieldEditMode', mode)
@@ -81,14 +81,8 @@ const mutations = {
   setEditField (state, editField) {
     state.editField = editField
   },
-  addTodo (state, title) {
-    state.todos.push(
-      {
-        'userId': 1,
-        'id': state.todos.length + 1,
-        'title': title,
-        'completed': false
-      })
+  addTodo (state, todo) {
+    state.todos.push(todo)
     state.editField = null
   },
   setEditFieldEditMode (state, mode) {

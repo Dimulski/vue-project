@@ -16,7 +16,7 @@
           <b-button
             variant="outline-primary"
             @click="setTodo">
-            {{ this.editFieldEditMode ? 'Save' : 'Create'}}
+            {{ this.editFieldEditMode ? 'Save' : 'Create' }}
           </b-button>
         </b-input-group>
     </b-form-group>
@@ -60,7 +60,7 @@
         <h5>Confirm Deletion</h5>
       </template>
       <template v-slot:default="{ hide }">
-        <p>Are you sure you want to delete todo "{{todoBeingEdited.title}}"</p>
+        <p>Are you sure you want to delete todo "{{ todoBeingEdited.title }}"</p>
       </template>
       <template v-slot:modal-footer="{ hide }">      
         <b-button variant="danger" @click="confirmDelete">
