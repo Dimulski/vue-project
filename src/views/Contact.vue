@@ -96,7 +96,7 @@ export default {
       if (this.name == null) {
         return null
       }
-      return this.name.length >= 4 && this.name.length <= 20 ? true : false;
+      return this.name.length >= 4 && this.name.length <= 20 ? true : false
     },
     invalidName() {
       if (this.name == null || (this.name.length > 4 && this.name.length <= 20)) {
@@ -154,13 +154,13 @@ export default {
   },
   methods: {
     submitForm(event) {
-      event.preventDefault();
-      this.clearForm();
-      this.showMessage = true;
+      event.preventDefault()
+      this.clearForm()
+      this.showMessage = true
     },
     updateNumber({isValid, country}) {
-      this.phone.fullNumber = `+${country.dialCode} ${this.phone.number}`;
-      this.phone.valid = isValid;
+      this.phone.fullNumber = `+${country.dialCode} ${this.phone.number}`
+      this.phone.valid = isValid
     },
     clearForm () {
       this.name = null

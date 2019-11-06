@@ -11,3 +11,4 @@ docker image push dimulski/bulletinboard:1.0
 docker rmi cheers
 docker system prune
 docker image tag bulletinboard:1.0 dimulski/bulletinboard:1.0
+docker run -it -p 5000:5000 --name nxp dimulski/nuxt-project
